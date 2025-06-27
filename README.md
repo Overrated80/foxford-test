@@ -5,7 +5,7 @@
 #Структура:
 
 foxford-static-site/
-  -docker-compose.yml
-  -nginx.conf
-  -html/
-      -index.html
+├── docker-compose.yml
+├── nginx.conf
+└── html/
+    └── index.html
