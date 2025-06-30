@@ -1,0 +1,14 @@
+- name: Install mc and htop on Ubuntu
+  hosts: all
+  become: true
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install mc and htop
+      apt:
+        name:
+          - mc
+          - htop
+        state: present

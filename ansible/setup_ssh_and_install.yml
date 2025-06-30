@@ -1,0 +1,33 @@
+---
+- name: Setup SSH keys and install tools
+  hosts: all
+  become: true
+  vars:
+    public_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+  tasks:
+    - name: Ensure .ssh directory exists
+      file:
+        path: "/home/{{ ansible_user }}/.ssh"
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0700'
+
+    - name: Add public key to authorized_keys
+      authorized_key:
+        user: "{{ ansible_user }}"
+        key: "{{ public_key }}"
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install mc and htop
+      apt:
+        name:
+          - mc
+          - htop
+        state: present
+
+# команда для запуска:
+# ansible-playbook -i inventory setup_ssh_and_install.yml
